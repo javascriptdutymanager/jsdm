@@ -18,26 +18,24 @@ let startBotV2 = setInterval(function() {
         let days = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
         return days[date.getDay()];
     }
-    let adminListID = [" @leilacrossfall(Лилия Винская)", " Юрий Юшманов", " @bee_0_0(Максим Серафимов)", " @monixlite(Максим'блин Моисеев)"];
+    let adminListID = [];
     // id
     let moderListID = [];
     // id
-    let helperListID = ["@siroksilena(Милена Симинел)", " @artemidasan(Элли Адоронова)"];
+    let helperListID = [];
     // id
-    let owneristID = ["@satosempai(Антон Серафимов)"];
+    let owneristID = [];
     // id
 
-    let owner = ["Антон Серафимов ", "Антон"];
+    let owner = [];
     // Разработчики
-    let adminList = ["Лилия Винская ", "Лилия", "Юрий Юшманов ", "Юрий", "Максим Серафимов ", "Максим", "Максим'блин Моисеев ", "Максим'блин"];
+    let adminList = [];
     // Администраторы
     let moderList = [];
     // Модераторы
-    let helperList = ["Элли Адоронова ", "Элли", "Милена Симинел ", "Милена"];
+    let helperList = [];
     // Помощники
-    //let userList = document.querySelector("button[class='_im_chat_members im-page--members']").innerText.replace(/\D+/g, "");
     let commandsList = [".к тех", ".к инфо", ".к пинг", ".к деж", ".к напиши", ".к реши", ".к рандом", ".к выполни", ".к админы", ".к дата", ".к профиль", ".к чек"];
-    // Список доступных команд на 30/08/2020
     let randomNum = Math.round(Math.random() * 596179350);
     let date = new Date();
     let dateTime = new Date().toLocaleTimeString();
@@ -65,7 +63,6 @@ let startBotV2 = setInterval(function() {
         openDialog: `${openCase.length}`,
         openDialogLast: `${openCase[0].innerText}`,
         openDialogFirst: `${openCase[openCase.length - 1].innerText}`,
-        bugTracker: `false`,
         audio: `${audio.innerText}`,
         messageCount: `${vk.counts.msg}`,
         playNow: `${playNow}`
@@ -100,8 +97,7 @@ let startBotV2 = setInterval(function() {
     let mSecondsFouc = 1;
     let userAccess = [];
     let randomPing = Math.round(Math.random * 354);
-    // те кто смогут использовать определённые команды
-
+    
     function TechInformation(messageTxt, input, send, from, admin) {
         //1
         for (let adm = 0; adm < admin.length; adm++) {
@@ -305,7 +301,6 @@ let startBotV2 = setInterval(function() {
                                        Откртых диалогов: ${profileInfo.openDialog}<br>
                                        Последний открытый диалог: «${profileInfo.openDialogLast}»<br>
                                        Первый открытый диалог: «${profileInfo.openDialogFirst}»<br>
-                                       Наличие Баг-трекера: ${profileInfo.bugTracker}<br>
                                        ${profileInfo.playNow} «${profileInfo.audio}»<br>
                                        Непрочитанных диалогов: ${profileInfo.messageCount}`
                     send.click();
@@ -315,8 +310,6 @@ let startBotV2 = setInterval(function() {
     }
     profile(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
 }, 500);
-
-//lastFocusMessage
 let clearCount = 1;
 let timeout = 1;
 // Флуд чистки (Можно отключить) в консоль, интервал в секундах
