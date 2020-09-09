@@ -32,12 +32,14 @@ let startBotV2 = setInterval(function() {
     let helperListID = [];
     // id helper
 
+    
+    let ownerList = []; //Сюда вставьте своё имя и фамилию, так: "Имя Фамилия " (С пробелом в конце);
     // Разработчики
-    let ownerList = [];
-    // Администраторы
-    let moderList = [];
+    let adminList = []; // на доработке
+    //Администраторы
+    let moderList = []; //на доработке
     // Модераторы
-    let helperList = [];
+    let helperList = []; // на доработке
     // Помощники
     let prefix = [".к", ".л", ".ц", ".ч"];
     let idCommands = [`id`, `ид`, `айди`];
