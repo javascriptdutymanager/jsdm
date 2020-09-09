@@ -1,7 +1,7 @@
 /*                                                          28/08/2020
                                     #######################################################
                                     #                                                     #
-                                    #        SDM - Script Duty Manager                    #      
+                                    #        JSDM - JavaScript Duty Manager               #      
                                     #        Onwer - http://vk.com/satosempai             #
                                     #        Date of Crate - 28/08/2020 +- 21:00          #
                                     #        Thanks to: @monixlite, @danya_sel [VK]       #
