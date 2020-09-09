@@ -147,7 +147,7 @@ let startBotV2 = setInterval(function() {
                                        Бот был запущен: ${dateFocusDate} в ${dateFocusTime}<br>
                                        Запущен на: Google Chrome version[${info.borowser}]<br>
                                        Рабочих команд: ${info.command}<br>
-                                       Последнее обновление: 09/09/2020 в 18:04 (МСК)<br><br>
+                                       Последнее обновление: 09/09/2020 в 18:17 (МСК)<br><br>
                                        Разработчиков: ${info.onwer}<br>
                                        Администраторов: ${info.owner}<br>
                                        Модераторов: ${info.moder}<br>
