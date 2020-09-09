@@ -1,7 +1,7 @@
 /*                                                          28/08/2020
                                     #######################################################
                                     #                                                     #
-                                    #        JSDM - JavaScript Duty Manager               #      
+                                    #        SDM - Script Duty Manager                    #      
                                     #        Onwer - http://vk.com/satosempai             #
                                     #        Date of Crate - 28/08/2020 +- 21:00          #
                                     #        Thanks to: @monixlite, @danya_sel [VK]       #
@@ -23,26 +23,27 @@ let startBotV2 = setInterval(function() {
         let month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
         return month[date.getMonth()];
     }
-    let owneristID = [];
+    let owneristID = []; // добавлять тех кто будет отображаться в "<prefix> админы"
     // id owner
-    let ownerListID = [];
+    let ownerListID = []; // добавлять тех кто будет отображаться в "<prefix> админы"
     // id owner
-    let moderListID = [];
+    let moderListID = []; // добавлять тех кто будет отображаться в "<prefix> админы"
     // id moder
-    let helperListID = [];
+    let helperListID = []; // добавлять тех кто будет отображаться в "<prefix> админы"
     // id helper
 
-    
-    let ownerList = []; //Сюда вставьте своё имя и фамилию, так: "Имя Фамилия " (С пробелом в конце);
+    let ownerList = []; // добавлять тех кто будет иметь доступ ко всем командам.
     // Разработчики
     let adminList = []; // на доработке
-    //Администраторы
-    let moderList = []; //на доработке
+    // Администраторы
+    let moderList = []; // на доработке
     // Модераторы
     let helperList = []; // на доработке
     // Помощники
-    let prefix = [".к", ".л", ".ц", ".ч"];
+    let prefix = [".к", ".л", ".ц", ".ч"]; // префиксы
+    let prefixAll = [".к", " .л", " .ц", " .ч"]; // список префиксов
     let idCommands = [`id`, `ид`, `айди`];
+    let downLoadBot = ["гит", "бот", "git", "ссылка", "link", "download"]; // команда "<prefix> гит/бот/git" т.д
     // префикс
     let status = ["Пользователь"];
     let randomNum = Math.round(Math.random() * 541351);
@@ -66,6 +67,10 @@ let startBotV2 = setInterval(function() {
     let lastFocusMessage = lastSendMessage[lastSendMessage.length - 1].innerText;
     let lastFocusMessageHtml = lastSendMessage[lastSendMessage.length - 1].innerHTML;
     let lastFocusName = lastMessageFrom[lastMessageFrom.length - 1].innerText;
+    let editMessage = document.querySelectorAll("span[class='im-mess--edit _im_mess_edit']");
+    let LastEditMessage = editMessage[editMessage.length - 1];
+    let editThisMsg = document.querySelector("button[aria-label='Редактировать']");
+    let editinput = document.querySelector("div[class='im_editable im-chat-input--text _im_text']");
     let secondsFouc = 1;
     let mSecondsFouc = 1;
     let randomPing = Math.round(Math.random * 1000000);
@@ -203,7 +208,7 @@ let startBotV2 = setInterval(function() {
             for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
                 if (messageTxt === `${prefix[prefixid]} деж` && lastFocusName === owner[adm]) {
                     setTimeout(function() {
-                        input.innerHTML = `✅ На месте! 2.0<br>
+                        input.innerHTML = `✅ На месте! 2.3<br>
 									  Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>
 									  Ответ без прин. задержки: 0.1с.`;
                         send.click();
@@ -249,6 +254,30 @@ let startBotV2 = setInterval(function() {
     }
     decide(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
+    function git(messageTxt, inputEdit, from, owner) {
+        //7
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let gitCount = 0; gitCount < downLoadBot.length; gitCount++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt === `${prefix[prefixid]} ${downLoadBot[gitCount]}` && lastFocusName === owner[adm]) {
+                        setTimeout(function() {
+                            LastEditMessage.click();
+                        }, 125)
+                        setTimeout(function() {
+                            inputEdit.innerHTML = `✅ Скачать данного бота можно по ссылке:<br> 
+                                               https://github.com/javascriptdutymanager/jsdm`
+                            editThisMsg.click();
+                        }, 150);
+                        setTimeout(function(){
+                            inputEdit.innerHTML = "";
+                        },151)
+                    }
+                }
+            }
+        }
+    }
+    git(lastFocusMessage, editinput, lastFocusName, ownerList);
+
     function random(messageTxt, input, send, from, owner) {
         //7
         for (let adm = 0; adm < owner.length; adm++) {
@@ -263,7 +292,7 @@ let startBotV2 = setInterval(function() {
         }
     }
     random(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
-    
+
     function id(messageTxt, input, send, from, owner) {
         //7
         for (let adm = 0; adm < owner.length; adm++) {
@@ -342,6 +371,21 @@ let startBotV2 = setInterval(function() {
     }
     data(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
+    function prefixList(messageTxt, input, send, from, owner, info) {
+        //10
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} префиксы` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `📃 Список ваших префиксов: <br> ${prefixAll}`
+                        send.click();
+                    }, 200)
+                }
+            }
+        }
+    }
+    prefixList(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+
     function dialogName(messageTxt, input, send, from, owner, info) {
         //10
         for (let adm = 0; adm < owner.length; adm++) {
@@ -392,7 +436,7 @@ let startBotV2 = setInterval(function() {
 }, 500);
 let clearCount = 1;
 // +1
-let timeout = 2;
+let timeout = 2; // в секундах (Можно отключить убрав функцию)
 let clear = setInterval(function() {
     console.log(`[${clearCount}] Cleaning the console - Running [Timeout ${timeout}s]`);
     clearCount++;
