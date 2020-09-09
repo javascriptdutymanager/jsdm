@@ -23,24 +23,26 @@ let startBotV2 = setInterval(function() {
         let month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
         return month[date.getMonth()];
     }
-    let owneristID = [];
+    let owneristID = ["@satosempai(Антон Серафимов)"];
     // id owner
-    let adminListID = [];
-    // id admin
+    let ownerListID = [];
+    // id owner
     let moderListID = [];
     // id moder
     let helperListID = [];
     // id helper
 
-    let owner = [];
     // Разработчики
-    let adminList = [];
+    let ownerList = [];
     // Администраторы
     let moderList = [];
     // Модераторы
     let helperList = [];
     // Помощники
-    let status = ["Пользователь"];
+    let prefix = [".к", ".л", ".ц", ".ч"]; // префиксы
+    let idCommands = [`id`, `ид`, `айди`]; // короткие команды к сигналу ".к id" (Можно дописать свои варианты)
+    // префикс
+    let status = ["Пользователь", "Помощник", "Модератор", "Администратор", "Разработчик"];
     let randomNum = Math.round(Math.random() * 541351);
     let date = new Date();
     let dateTime = new Date().toLocaleTimeString();
@@ -53,7 +55,7 @@ let startBotV2 = setInterval(function() {
     let fullName = document.querySelector("img[class='top_profile_vkconnect_img']").getAttribute("alt");
     let replyFullFullName = document.querySelectorAll("a[class='im-replied--author-link _im_replied_author_link']");
     let replyFullLink = document.querySelectorAll("a[class='im-replied--author-link _im_replied_author_link']")
-	let chatName = document.querySelector("a[class='im-page--title-main-inner _im_page_peer_name']").innerText;
+    let chatName = document.querySelector("a[class='im-page--title-main-inner _im_page_peer_name']").innerText;
     let ulItemChatid = document.querySelectorAll("ul[class='im-page--dcontent ui_clean_list _im_page_dcontent'] > li");
     let lastSendMessage = document.querySelectorAll("div[class='im-mess--text wall_module _im_log_body']");
     let lastMessageFrom = document.querySelectorAll("a[class='im-mess-stack--lnk']");
@@ -65,7 +67,7 @@ let startBotV2 = setInterval(function() {
     let secondsFouc = 1;
     let mSecondsFouc = 1;
     let randomPing = Math.round(Math.random * 1000000);
-	let playNow = "";
+    let playNow = "";
     let playOrStart = document.querySelector("div[class='blind_label _top_audio_player_play_blind_label']");
     // play or start
     if (playOrStart.innerText == "Приостановить") {
@@ -86,12 +88,12 @@ let startBotV2 = setInterval(function() {
     }
     const userInformation = {
         borowser: `${browser.version}`,
-        userInfo: `${status[0]}: @${userLink}(${userName}).`,
+        userInfo: `${status[4]}: @${userLink}(${userName}).`,
         onwer: `${owneristID.length}.`,
-        admin: `${adminListID.length}.`,
+        admin: `${ownerListID.length}.`,
         moder: `${moderListID.length}.`,
         helper: `${helperListID.length}.`,
-        command: `11/12`
+        command: `12`
     }
     const techInfo = {
         speedInternet: `${navigator.connection.downlink}`,
@@ -102,12 +104,13 @@ let startBotV2 = setInterval(function() {
         country: `${vk.countryISO}`,
         webTag: `${allTagInWeb}`
     }
-    function TechInformation(messageTxt, input, send, from, admin) {
+    function TechInformation(messageTxt, input, send, from, owner) {
         //1
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к тех" && lastFocusName === admin[adm] || messageTxt === ".к тех" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `Данные с открытого источника:<br><br>
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} тех` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `Данные с открытого источника:<br><br>
                                        Скорость интернета: ${techInfo.speedInternet}Mb/s<br>
                                        Браузер: ${techInfo.browserName}<br>
                                        Платформа: ${techInfo.platform}<br>
@@ -115,45 +118,49 @@ let startBotV2 = setInterval(function() {
                                        VK UUID: ${techInfo.vkUIID}<br>
                                        Страна: ${techInfo.country}<br>
                                        Всего тегов на (текущей) странице: ${techInfo.webTag}`;
-                    send.click();
-                }, 200)
+                        send.click();
+                    }, 200)
+                }
+
             }
         }
     }
-    TechInformation(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
+    TechInformation(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-    function information(messageTxt, input, send, from, admin, info) {
+    function information(messageTxt, input, send, from, owner, info) {
         //2
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к инфо" && lastFocusName === admin[adm] || messageTxt === ".к инфо" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} инфо` && lastFocusName === owner[adm]) {
                     setTimeout(function() {
-                        dateFocusDate = "Вчера";
-                    }, 86400000);
-                    setTimeout(function() {
-                        dateFocusDate = "Позавчера";
-                    }, 172800000);
-                    setTimeout(function() {
-                        dateFocusDate = new Date().toLocaleDateString();
-                    }, 259200000);
-                    input.innerHTML = `Информация JSDM 2.1<br>
+                        setTimeout(function() {
+                            dateFocusDate = "Вчера";
+                        }, 86400000);
+                        setTimeout(function() {
+                            dateFocusDate = "Позавчера";
+                        }, 172800000);
+                        setTimeout(function() {
+                            dateFocusDate = new Date().toLocaleDateString();
+                        }, 259200000);
+                        input.innerHTML = `Информация JSDM 2.1<br>
                                        ${info.userInfo}<br>
                                        Бот был запущен: ${dateFocusDate} в ${dateFocusTime}<br>
                                        Запущен на: Google Chrome version[${info.borowser}]<br>
                                        Рабочих команд: ${info.command}<br>
-                                       Доп. 12-я команда на тех-работах<br>
-                                       Последнее обновление: 04/09/2020 в 18:40 (МСК)<br><br>
+                                       Последнее обновление: 09/09/2020 в 18:40 (МСК)<br><br>
                                        Разработчиков: ${info.onwer}<br>
-                                       Администраторов: ${info.admin}<br>
+                                       Администраторов: ${info.owner}<br>
                                        Модераторов: ${info.moder}<br>
                                        Помощников: ${info.helper}<br>`
-                    send.click();
-                }, 200)
+                        send.click();
+                    }, 200)
+                }
             }
         }
     }
-    information(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList, userInformation);
-    function ping(messageTxt, input, send, from, admin) {
+    information(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList, userInformation);
+
+    function ping(messageTxt, input, send, from, owner) {
         //4
         setInterval(function() {
             secondsFouc++;
@@ -162,14 +169,16 @@ let startBotV2 = setInterval(function() {
             mSecondsFouc++;
         }, 10);
 
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к пинг" && lastFocusName === admin[adm] || messageTxt === ".к пинг" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `ПОНГ TP<br>
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} пинг` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `ПОНГ TP<br>
 									  Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>
 									  Ответ без прин. задержки: 0.1с.`;
-                    send.click();
-                }, 253);
+                        send.click();
+                    }, 253);
+                }
             }
         }
         setTimeout(function() {
@@ -177,9 +186,9 @@ let startBotV2 = setInterval(function() {
             mSecondsFouc = 1;
         }, 180);
     }
-    ping(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
+    ping(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-    function duty(messageTxt, input, send, from, admin) {
+    function duty(messageTxt, input, send, from, owner) {
         //4
         setInterval(function() {
             secondsFouc++;
@@ -188,14 +197,16 @@ let startBotV2 = setInterval(function() {
             mSecondsFouc++;
         }, 10);
 
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к деж" && lastFocusName === admin[adm] || messageTxt === ".к деж" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `✅ На месте! 2.0<br>
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} деж` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `✅ На месте! 2.0<br>
 									  Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>
 									  Ответ без прин. задержки: 0.1с.`;
-                    send.click();
-                }, 253);
+                        send.click();
+                    }, 253);
+                }
             }
         }
         setTimeout(function() {
@@ -203,160 +214,181 @@ let startBotV2 = setInterval(function() {
             mSecondsFouc = 1;
         }, 180);
     }
-    duty(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
+    duty(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-    function say(messageTxt, input, send, from, admin) {
+    function say(messageTxt, input, send, from, owner) {
         //5
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt.split(".к напиши<br>")[1] && !messageTxt.split(".к напиши<br>")[0] && lastFocusName == admin[adm] || messageTxt.split(".к напиши<br>")[1] && !messageTxt.split(".к напиши<br>")[0] && lastFocusName == owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = messageTxt.split(".к напиши<br>")[1];
-                    send.click();
-                }, 200)
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt.split(`${prefix[prefixid]} напиши<br>`)[1] && !messageTxt.split(`${prefix[prefixid]} напиши<br>`)[0] && lastFocusName == owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = messageTxt.split(`${prefix[prefixid]}напиши<br>`)[1];
+                        send.click();
+                    }, 200)
+
+                }
             }
         }
-    }
-    say(lastFocusMessageHtml, inputValue, buttonSendMessage, lastFocusName, adminList);
+        say(lastFocusMessageHtml, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-    function decide(messageTxt, input, send, from, admin) {
-        //6
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt.split(".к реши")[1] && !messageTxt.split(".к реши")[0] && lastFocusName == admin[adm] || messageTxt.split(".к реши")[1] && !messageTxt.split(".к реши")[0] && lastFocusName == helperList[adm] || messageTxt.split(".к реши")[1] && !messageTxt.split(".к реши")[0] && lastFocusName == owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `${messageTxt.split(".к реши")[1]} = ${eval(messageTxt.split(".к реши")[1])}`
-                    send.click();
-                }, 200)
-            }
-        }
-    }
-    decide(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
-
-    function random(messageTxt, input, send, from, admin) {
-        //7
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к рандом" && lastFocusName === admin[adm] || messageTxt === ".к рандом" && lastFocusName === helperList[adm] || messageTxt === ".к рандом" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `Рандомное число... ${randomNum}`
-                    send.click();
-                }, 200)
-            }
-        }
-    }
-
-    function id(messageTxt, input, send, from, admin) {
-        //7
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к id" && lastFocusName === owner[adm] || messageTxt === ".к айди" && lastFocusName === owner[adm] || messageTxt === ".к ид" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `Ваш цифровой id: ${vk.id}`
-                    send.click();
-                }, 200)
-            }
-        }
-    }
-    id(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
-
-    function js(messageTxt, input, send, from, admin) {
-        //8
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt.split(".к выполни ")[1] && !messageTxt.split(".к выполни ")[0] && lastFocusName == admin[adm] || messageTxt.split(".к выполни ")[1] && !messageTxt.split(".к выполни ")[0] && lastFocusName == owner[adm]) {
-                setTimeout(function() {
-                    eval(messageTxt.split(".к выполни ")[1]);
-                    input.innerHTML = `Function: ${messageTxt.split(".к выполни ")[1]}`
-                    send.click();
-                }, 200)
-            }
-        }
-    }
-    js(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
-
-    function adminSource(messageTxt, input, send, from, admin, info) {
-        //9
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к админы" && lastFocusName === admin[adm] || messageTxt === ".к админы" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    if (owneristID[0] === undefined) {
-                        owneristID.push("Никто пока-что не назначен.");
+        function decide(messageTxt, input, send, from, owner) {
+            //6
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt.split(`${prefix[prefixid]} реши `)[1] && !messageTxt.split(`${prefix[prefixid]} реши `)[0] && lastFocusName == owner[adm]) {
+                        setTimeout(function() {
+                            input.innerHTML = `${messageTxt.split(`${prefix[prefixid]} реши `)[1]} = ${eval(messageTxt.split(`${prefix[prefixid]} реши `)[1])}`
+                            send.click();
+                        }, 200)
                     }
-                    if (adminListID[0] === undefined) {
-                        adminListID.push("Никто пока-что не назначен.");
+                }
+            }
+        }
+        decide(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+
+        function random(messageTxt, input, send, from, owner) {
+            //7
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt === `${prefix[prefixid]}рандом` && lastFocusName === owner[adm]) {
+                        setTimeout(function() {
+                            input.innerHTML = `Рандомное число... ${randomNum}`
+                            send.click();
+                        }, 200)
                     }
-                    if (moderListID[0] === undefined) {
-                        moderListID.push("Никто пока-что не назначен.");
+                }
+            }
+        }
+
+        function id(messageTxt, input, send, from, owner) {
+            //7
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let idCount = 0; idCount < idCommands.length; idCount++) {
+                    for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                        if (messageTxt === `${prefix[prefixid]} ${idCommands[idCount]}` && lastFocusName === owner[adm]) {
+                            setTimeout(function() {
+                                input.innerHTML = `Ваш цифровой id: ${vk.id}`
+                                send.click();
+                            }, 200)
+                        }
                     }
-                    if (helperListID[0] === undefined) {
-                        helperListID.push("Никто пока-что не назначен.");
+                }
+            }
+        }
+        id(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+
+        function js(messageTxt, input, send, from, owner) {
+            //8
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt.split(`${prefix[prefixid]}выполни `)[1] && !messageTxt.split(`${prefix[prefixid]}выполни `)[0] && lastFocusName == owner[adm]) {
+                        setTimeout(function() {
+                            eval(messageTxt.split(`${prefix[prefixid]}выполни `)[1]);
+                            input.innerHTML = `Function: ${messageTxt.split(`${prefix[prefixid]}выполни `)[1]}`
+                            send.click();
+                        }, 200)
                     }
-                    input.innerHTML = `• Список Разработчиков:<br> ${owneristID}<br><br>
-                                       • Список Администраторов:<br> ${adminListID}<br><br>
+                }
+            }
+        }
+        js(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+
+        function ownerSource(messageTxt, input, send, from, owner, info) {
+            //9
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt === `${prefix[prefixid]}админы` && lastFocusName === owner[adm]) {
+                        setTimeout(function() {
+                            if (owneristID[0] === undefined) {
+                                owneristID.push("Никто пока-что не назначен.");
+                            }
+                            if (ownerListID[0] === undefined) {
+                                ownerListID.push("Никто пока-что не назначен.");
+                            }
+                            if (moderListID[0] === undefined) {
+                                moderListID.push("Никто пока-что не назначен.");
+                            }
+                            if (helperListID[0] === undefined) {
+                                helperListID.push("Никто пока-что не назначен.");
+                            }
+                            input.innerHTML = `• Список Разработчиков:<br> ${owneristID}<br><br>
+                                       • Список Администраторов:<br> ${ownerListID}<br><br>
                                        • Список Модераторов:<br> ${moderListID}<br><br>
                                        • Список Помощников:<br> ${helperListID}`;
-                    send.click();
-                }, 200)
+                            send.click();
+                        }, 200)
+                    }
+                }
             }
         }
-    }
-    adminSource(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList, userInformation);
+        ownerSource(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList, userInformation);
 
-    function data(messageTxt, input, send, from, admin, info) {
-        //10
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к дата" && lastFocusName === admin[adm] || messageTxt === ".к дата" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `Сегодня, ${getWeekDay(date)}<br>Время: ${dateTime}<br>Дата: ${getWeekMonth(date)}, ${dateFull}`
-                    send.click();
-                }, 200)
+        function data(messageTxt, input, send, from, owner, info) {
+            //10
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt === `${prefix[prefixid]}дата` && lastFocusName === owner[adm]) {
+                        setTimeout(function() {
+                            input.innerHTML = `Сегодня, ${getWeekDay(date)}<br>Время: ${dateTime}<br>Дата: ${getWeekMonth(date)}, ${dateFull}`
+                            send.click();
+                        }, 200)
+                    }
+                }
             }
         }
-    }
-    data(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
+        data(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-    function dialogName(messageTxt, input, send, from, admin, info) {
-        //10
-        for (let adm = 0; adm < admin.length; adm++) {
-            let onOrOff = document.querySelector("span[class='im-page--title-meta _im_page_peer_online']").innerText;
-            let chatOrDialog = "📋 В чате с: "
-            let idChatName = "🀄 ID Чата: "
-            if (onOrOff.indexOf("участника") > -1 || onOrOff.indexOf("участников") > -1) {
-                chatOrDialog = "📋 В чате: "
-                idChatName = "🀄 ID Чата: "
-            } else {
-                chatOrDialog = "📋 В диалоге с: "
-                idChatName = "🀄 ID Собеседника: "
-            }
-            if (messageTxt === ".к чат" && lastFocusName === admin[adm] || messageTxt === ".к чат" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `${chatOrDialog} ${chatName}<br>
+        function dialogName(messageTxt, input, send, from, owner, info) {
+            //10
+            for (let adm = 0; adm < owner.length; adm++) {
+                let onOrOff = document.querySelector("span[class='im-page--title-meta _im_page_peer_online']").innerText;
+                let chatOrDialog = "📋 В чате с: "
+                let idChatName = "🀄 ID Чата: "
+                if (onOrOff.indexOf("участника") > -1 || onOrOff.indexOf("участников") > -1) {
+                    chatOrDialog = "📋 В чате: "
+                    idChatName = "🀄 ID Чата: "
+                } else {
+                    chatOrDialog = "📋 В диалоге с: "
+                    idChatName = "🀄 ID Собеседника: "
+                }
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt === `${prefix[prefixid]} чат` && lastFocusName === owner[adm]) {
+                        setTimeout(function() {
+                            input.innerHTML = `${chatOrDialog} ${chatName}<br>
                                        ${idChatName} ${ulItemChatid[0].getAttribute("data-list-id")}`
-                    send.click();
-                }, 200)
+                            send.click();
+                        }, 200)
+                    }
+                }
             }
         }
-    }
-    dialogName(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
+        dialogName(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-    function profile(messageTxt, input, send, from, admin, info) {
-        //11
-        for (let adm = 0; adm < admin.length; adm++) {
-            if (messageTxt === ".к профиль" && lastFocusName === admin[adm] || messageTxt === ".к профиль" && lastFocusName === owner[adm]) {
-                setTimeout(function() {
-                    input.innerHTML = `Профиль: ${profileInfo.name}<br>
+        function profile(messageTxt, input, send, from, owner, info) {
+            //11
+            for (let adm = 0; adm < owner.length; adm++) {
+                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                    if (messageTxt === `${prefix[prefixid]} профиль` && lastFocusName === owner[adm]) {
+                        setTimeout(function() {
+                            input.innerHTML = `Профиль: ${profileInfo.name}<br>
                                        Откртых диалогов: ${profileInfo.openDialog}<br>
                                        Последний открытый диалог: «${profileInfo.openDialogLast}»<br>
                                        Первый открытый диалог: «${profileInfo.openDialogFirst}»<br>
                                        Наличие Баг-трекера: ${profileInfo.bugTracker}<br>
                                        ${profileInfo.playNow} «${profileInfo.audio}»<br>
                                        Непрочитанных диалогов: ${profileInfo.messageCount}`
-                    send.click();
-                }, 200);
+                            send.click();
+                        }, 200);
+                    }
+                }
             }
         }
+        profile(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
     }
-    profile(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, adminList);
 }, 500);
 let clearCount = 1;
-let timeout = 1;
-// Флуд чистки (Можно отключить) в консоль, интервал в секундах
+// +1
+let timeout = 2;
 let clear = setInterval(function() {
     console.log(`[${clearCount}] Cleaning the console - Running [Timeout ${timeout}s]`);
     clearCount++;
