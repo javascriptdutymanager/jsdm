@@ -23,7 +23,7 @@ let startBotV2 = setInterval(function() {
         let month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
         return month[date.getMonth()];
     }
-    let owneristID = ["@satosempai(Антон Серафимов)"];
+    let owneristID = [];
     // id owner
     let ownerListID = [];
     // id owner
@@ -39,8 +39,8 @@ let startBotV2 = setInterval(function() {
     // Модераторы
     let helperList = [];
     // Помощники
-    let prefix = [".к", ".л", ".ц", ".ч"]; // префиксы
-    let idCommands = [`id`, `ид`, `айди`]; // короткие команды к сигналу ".к id" (Можно дописать свои варианты)
+    let prefix = [".к", ".л", ".ц", ".ч"];
+    let idCommands = [`id`, `ид`, `айди`];
     // префикс
     let status = ["Пользователь", "Помощник", "Модератор", "Администратор", "Разработчик"];
     let randomNum = Math.round(Math.random() * 541351);
@@ -142,12 +142,12 @@ let startBotV2 = setInterval(function() {
                         setTimeout(function() {
                             dateFocusDate = new Date().toLocaleDateString();
                         }, 259200000);
-                        input.innerHTML = `Информация JSDM 2.1<br>
+                        input.innerHTML = `Информация JSDM 2.2<br>
                                        ${info.userInfo}<br>
                                        Бот был запущен: ${dateFocusDate} в ${dateFocusTime}<br>
                                        Запущен на: Google Chrome version[${info.borowser}]<br>
                                        Рабочих команд: ${info.command}<br>
-                                       Последнее обновление: 09/09/2020 в 18:40 (МСК)<br><br>
+                                       Последнее обновление: 09/09/2020 в 18:04 (МСК)<br><br>
                                        Разработчиков: ${info.onwer}<br>
                                        Администраторов: ${info.owner}<br>
                                        Модераторов: ${info.moder}<br>
@@ -229,162 +229,164 @@ let startBotV2 = setInterval(function() {
                 }
             }
         }
-        say(lastFocusMessageHtml, inputValue, buttonSendMessage, lastFocusName, ownerList);
+    }
+    say(lastFocusMessageHtml, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-        function decide(messageTxt, input, send, from, owner) {
-            //6
-            for (let adm = 0; adm < owner.length; adm++) {
+    function decide(messageTxt, input, send, from, owner) {
+        //6
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt.split(`${prefix[prefixid]} реши `)[1] && !messageTxt.split(`${prefix[prefixid]} реши `)[0] && lastFocusName == owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `${messageTxt.split(`${prefix[prefixid]} реши `)[1]} = ${eval(messageTxt.split(`${prefix[prefixid]} реши `)[1])}`
+                        send.click();
+                    }, 200)
+                }
+            }
+        }
+    }
+    decide(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+
+    function random(messageTxt, input, send, from, owner) {
+        //7
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} рандом` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `Рандомное число... ${randomNum}`
+                        send.click();
+                    }, 200)
+                }
+            }
+        }
+    }
+    random(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+    
+    function id(messageTxt, input, send, from, owner) {
+        //7
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let idCount = 0; idCount < idCommands.length; idCount++) {
                 for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt.split(`${prefix[prefixid]} реши `)[1] && !messageTxt.split(`${prefix[prefixid]} реши `)[0] && lastFocusName == owner[adm]) {
+                    if (messageTxt === `${prefix[prefixid]} ${idCommands[idCount]}` && lastFocusName === owner[adm]) {
                         setTimeout(function() {
-                            input.innerHTML = `${messageTxt.split(`${prefix[prefixid]} реши `)[1]} = ${eval(messageTxt.split(`${prefix[prefixid]} реши `)[1])}`
+                            input.innerHTML = `Ваш цифровой id: ${vk.id}`
                             send.click();
                         }, 200)
                     }
                 }
             }
         }
-        decide(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+    }
+    id(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-        function random(messageTxt, input, send, from, owner) {
-            //7
-            for (let adm = 0; adm < owner.length; adm++) {
-                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt === `${prefix[prefixid]}рандом` && lastFocusName === owner[adm]) {
-                        setTimeout(function() {
-                            input.innerHTML = `Рандомное число... ${randomNum}`
-                            send.click();
-                        }, 200)
-                    }
+    function js(messageTxt, input, send, from, owner) {
+        //8
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt.split(`${prefix[prefixid]} выполни `)[1] && !messageTxt.split(`${prefix[prefixid]} выполни `)[0] && lastFocusName == owner[adm]) {
+                    setTimeout(function() {
+                        eval(messageTxt.split(`${prefix[prefixid]} выполни `)[1]);
+                        input.innerHTML = `Function: ${messageTxt.split(`${prefix[prefixid]} выполни `)[1]}`
+                        send.click();
+                    }, 200)
                 }
             }
         }
+    }
+    js(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-        function id(messageTxt, input, send, from, owner) {
-            //7
-            for (let adm = 0; adm < owner.length; adm++) {
-                for (let idCount = 0; idCount < idCommands.length; idCount++) {
-                    for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                        if (messageTxt === `${prefix[prefixid]} ${idCommands[idCount]}` && lastFocusName === owner[adm]) {
-                            setTimeout(function() {
-                                input.innerHTML = `Ваш цифровой id: ${vk.id}`
-                                send.click();
-                            }, 200)
+    function ownerSource(messageTxt, input, send, from, owner, info) {
+        //9
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} админы` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        if (owneristID[0] === undefined) {
+                            owneristID.push("Никто пока-что не назначен.");
                         }
-                    }
-                }
-            }
-        }
-        id(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
-
-        function js(messageTxt, input, send, from, owner) {
-            //8
-            for (let adm = 0; adm < owner.length; adm++) {
-                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt.split(`${prefix[prefixid]}выполни `)[1] && !messageTxt.split(`${prefix[prefixid]}выполни `)[0] && lastFocusName == owner[adm]) {
-                        setTimeout(function() {
-                            eval(messageTxt.split(`${prefix[prefixid]}выполни `)[1]);
-                            input.innerHTML = `Function: ${messageTxt.split(`${prefix[prefixid]}выполни `)[1]}`
-                            send.click();
-                        }, 200)
-                    }
-                }
-            }
-        }
-        js(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
-
-        function ownerSource(messageTxt, input, send, from, owner, info) {
-            //9
-            for (let adm = 0; adm < owner.length; adm++) {
-                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt === `${prefix[prefixid]}админы` && lastFocusName === owner[adm]) {
-                        setTimeout(function() {
-                            if (owneristID[0] === undefined) {
-                                owneristID.push("Никто пока-что не назначен.");
-                            }
-                            if (ownerListID[0] === undefined) {
-                                ownerListID.push("Никто пока-что не назначен.");
-                            }
-                            if (moderListID[0] === undefined) {
-                                moderListID.push("Никто пока-что не назначен.");
-                            }
-                            if (helperListID[0] === undefined) {
-                                helperListID.push("Никто пока-что не назначен.");
-                            }
-                            input.innerHTML = `• Список Разработчиков:<br> ${owneristID}<br><br>
+                        if (ownerListID[0] === undefined) {
+                            ownerListID.push("Никто пока-что не назначен.");
+                        }
+                        if (moderListID[0] === undefined) {
+                            moderListID.push("Никто пока-что не назначен.");
+                        }
+                        if (helperListID[0] === undefined) {
+                            helperListID.push("Никто пока-что не назначен.");
+                        }
+                        input.innerHTML = `• Список Разработчиков:<br> ${owneristID}<br><br>
                                        • Список Администраторов:<br> ${ownerListID}<br><br>
                                        • Список Модераторов:<br> ${moderListID}<br><br>
                                        • Список Помощников:<br> ${helperListID}`;
-                            send.click();
-                        }, 200)
-                    }
+                        send.click();
+                    }, 200)
                 }
             }
         }
-        ownerSource(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList, userInformation);
+    }
+    ownerSource(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList, userInformation);
 
-        function data(messageTxt, input, send, from, owner, info) {
-            //10
-            for (let adm = 0; adm < owner.length; adm++) {
-                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt === `${prefix[prefixid]}дата` && lastFocusName === owner[adm]) {
-                        setTimeout(function() {
-                            input.innerHTML = `Сегодня, ${getWeekDay(date)}<br>Время: ${dateTime}<br>Дата: ${getWeekMonth(date)}, ${dateFull}`
-                            send.click();
-                        }, 200)
-                    }
+    function data(messageTxt, input, send, from, owner, info) {
+        //10
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} дата` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `Сегодня, ${getWeekDay(date)}<br>Время: ${dateTime}<br>Дата: ${getWeekMonth(date)}, ${dateFull}`
+                        send.click();
+                    }, 200)
                 }
             }
         }
-        data(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+    }
+    data(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-        function dialogName(messageTxt, input, send, from, owner, info) {
-            //10
-            for (let adm = 0; adm < owner.length; adm++) {
-                let onOrOff = document.querySelector("span[class='im-page--title-meta _im_page_peer_online']").innerText;
-                let chatOrDialog = "📋 В чате с: "
-                let idChatName = "🀄 ID Чата: "
-                if (onOrOff.indexOf("участника") > -1 || onOrOff.indexOf("участников") > -1) {
-                    chatOrDialog = "📋 В чате: "
-                    idChatName = "🀄 ID Чата: "
-                } else {
-                    chatOrDialog = "📋 В диалоге с: "
-                    idChatName = "🀄 ID Собеседника: "
-                }
-                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt === `${prefix[prefixid]} чат` && lastFocusName === owner[adm]) {
-                        setTimeout(function() {
-                            input.innerHTML = `${chatOrDialog} ${chatName}<br>
+    function dialogName(messageTxt, input, send, from, owner, info) {
+        //10
+        for (let adm = 0; adm < owner.length; adm++) {
+            let onOrOff = document.querySelector("span[class='im-page--title-meta _im_page_peer_online']").innerText;
+            let chatOrDialog = "📋 В чате с: "
+            let idChatName = "🀄 ID Чата: "
+            if (onOrOff.indexOf("участника") > -1 || onOrOff.indexOf("участников") > -1) {
+                chatOrDialog = "📋 В чате: "
+                idChatName = "🀄 ID Чата: "
+            } else {
+                chatOrDialog = "📋 В диалоге с: "
+                idChatName = "🀄 ID Собеседника: "
+            }
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} чат` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `${chatOrDialog} ${chatName}<br>
                                        ${idChatName} ${ulItemChatid[0].getAttribute("data-list-id")}`
-                            send.click();
-                        }, 200)
-                    }
+                        send.click();
+                    }, 200)
                 }
             }
         }
-        dialogName(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+    }
+    dialogName(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
 
-        function profile(messageTxt, input, send, from, owner, info) {
-            //11
-            for (let adm = 0; adm < owner.length; adm++) {
-                for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
-                    if (messageTxt === `${prefix[prefixid]} профиль` && lastFocusName === owner[adm]) {
-                        setTimeout(function() {
-                            input.innerHTML = `Профиль: ${profileInfo.name}<br>
+    function profile(messageTxt, input, send, from, owner) {
+        //11
+        for (let adm = 0; adm < owner.length; adm++) {
+            for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
+                if (messageTxt === `${prefix[prefixid]} профиль` && lastFocusName === owner[adm]) {
+                    setTimeout(function() {
+                        input.innerHTML = `Профиль: ${profileInfo.name}<br>
                                        Откртых диалогов: ${profileInfo.openDialog}<br>
                                        Последний открытый диалог: «${profileInfo.openDialogLast}»<br>
                                        Первый открытый диалог: «${profileInfo.openDialogFirst}»<br>
                                        Наличие Баг-трекера: ${profileInfo.bugTracker}<br>
                                        ${profileInfo.playNow} «${profileInfo.audio}»<br>
                                        Непрочитанных диалогов: ${profileInfo.messageCount}`
-                            send.click();
-                        }, 200);
-                    }
+                        send.click();
+                    }, 200);
                 }
             }
         }
-        profile(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
     }
+    profile(lastFocusMessage, inputValue, buttonSendMessage, lastFocusName, ownerList);
+
 }, 500);
 let clearCount = 1;
 // +1
