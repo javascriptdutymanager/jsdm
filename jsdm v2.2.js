@@ -42,7 +42,7 @@ let startBotV2 = setInterval(function() {
     let prefix = [".к", ".л", ".ц", ".ч"];
     let idCommands = [`id`, `ид`, `айди`];
     // префикс
-    let status = ["Пользователь", "Помощник", "Модератор", "Администратор", "Разработчик"];
+    let status = ["Пользователь"];
     let randomNum = Math.round(Math.random() * 541351);
     let date = new Date();
     let dateTime = new Date().toLocaleTimeString();
@@ -88,7 +88,7 @@ let startBotV2 = setInterval(function() {
     }
     const userInformation = {
         borowser: `${browser.version}`,
-        userInfo: `${status[4]}: @${userLink}(${userName}).`,
+        userInfo: `${status[0]}: @${userLink}(${userName}).`,
         onwer: `${owneristID.length}.`,
         admin: `${ownerListID.length}.`,
         moder: `${moderListID.length}.`,
