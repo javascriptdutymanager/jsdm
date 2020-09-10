@@ -274,9 +274,7 @@ let startBotV2 = setInterval(function() {
             for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
                 if (messageTxt === `${prefix[prefixid]} пинг` && lastFocusName === owner[adm]) {
                     setTimeout(function() {
-                        input.innerHTML = `ПОНГ TP<br>
-									  Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>
-									  Ответ без прин. задержки: 0.1с.`;
+                        input.innerHTML = `ПОНГ TP<br>Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>Ответ без прин. задержки: 0.1с.`;
                         send.click();
                     }, 253);
                 }
@@ -302,9 +300,7 @@ let startBotV2 = setInterval(function() {
             for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
                 if (messageTxt === `${prefix[prefixid]} деж` && lastFocusName === owner[adm]) {
                     setTimeout(function() {
-                        input.innerHTML = `✅ На месте! 2.0<br>
-									  Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>
-									  Ответ без прин. задержки: 0.1с.`;
+                        input.innerHTML = `✅ На месте! 2.0<br>Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>Ответ без прин. задержки: 0.1с.`;
                         send.click();
                     }, 253);
                 }
@@ -438,7 +434,7 @@ let startBotV2 = setInterval(function() {
                         if (helperListID[0] === undefined) {
                             helperListID.push("Никто пока-что не назначен.");
                         }
-                        input.innerHTML = `• Список Разработчиков:<br> ${owneristID}<br><br>
+                        input.innerHTML = `• Список Владельцев:<br> ${owneristID}<br><br>
                                        • Список Администраторов:<br> ${adminList}<br><br>
                                        • Список Модераторов:<br> ${moderListID}<br><br>
                                        • Список Помощников:<br> ${helperListID}`;
