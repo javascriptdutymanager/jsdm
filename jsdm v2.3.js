@@ -302,7 +302,7 @@ let startBotV2 = setInterval(function() {
             for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
                 if (messageTxt === `${prefix[prefixid]} деж` && lastFocusName === owner[adm]) {
                     setTimeout(function() {
-                        input.innerHTML = `✅ На месте! 2.3<br>
+                        input.innerHTML = `✅ На месте! 2.0<br>
 									  Ответ через: ${secondsFouc}.${mSecondsFouc}с.<br>
 									  Ответ без прин. задержки: 0.1с.`;
                         send.click();
