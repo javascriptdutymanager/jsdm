@@ -321,7 +321,7 @@ let startBotV2 = setInterval(function() {
                         setTimeout(function() {
                             dateFocusDate = new Date().toLocaleDateString();
                         }, 259200000);
-                        input.innerHTML = `Информация JSDM 2.4<br>
+                        input.innerHTML = `Информация JSDM 2.6<br>
                                        ${info.userInfo}<br>
                                        Бот был запущен: ${dateFocusDate} в ${dateFocusTime}<br>
                                        Запущен на: Google Chrome version[${info.borowser}]<br>
