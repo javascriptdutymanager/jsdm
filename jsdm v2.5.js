@@ -354,7 +354,7 @@ let startBotV2 = setInterval(function() {
             for (let prefixid = 0; prefixid < prefix.length; prefixid++) {
                 if (messageTxt.split(`${prefix[prefixid]} напиши<br>`)[1] && !messageTxt.split(`${prefix[prefixid]} напиши<br>`)[0] && lastFocusName == owner[adm]) {
                     setTimeout(function() {
-                        input.innerHTML = messageTxt.split(`${prefix[prefixid]}напиши<br>`)[1];
+                        input.innerHTML = messageTxt.split(`${prefix[prefixid]} напиши<br>`)[1];
                         send.click();
                     }, 200)
 
